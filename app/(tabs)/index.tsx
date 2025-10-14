@@ -1,98 +1,141 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import React from 'react';
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  RefreshControl,
+  Alert,
+  Text,
+} from 'react-native';
+import { router } from 'expo-router';
+import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useEvents } from '@/contexts/EventContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { Event } from '@/types';
+import { AppleHeader } from '@/components/AppleHeader';
+import { AppleEventCard } from '@/components/AppleEventCard';
+import { Colors, Spacing, Typography } from '@/constants/theme';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+export default function EventsScreen() {
+  const { events, loading, refreshEvents, deleteEvent, toggleParticipation } = useEvents();
+  const { user } = useAuth();
+  const colorScheme = useColorScheme();
+  const colors = Colors[colorScheme ?? 'light'];
 
-export default function HomeScreen() {
+  const handleEventPress = (event: Event) => {
+    router.push(`/event-details/${event.id}`);
+  };
+
+  const handleDeleteEvent = (event: Event) => {
+    if (event.createdBy !== user?.id) {
+      Alert.alert('Erreur', 'Vous ne pouvez supprimer que vos propres événements');
+      return;
+    }
+
+    Alert.alert(
+      'Supprimer l\'événement',
+      'Êtes-vous sûr de vouloir supprimer cet événement ?',
+      [
+        { text: 'Annuler', style: 'cancel' },
+        { text: 'Supprimer', style: 'destructive', onPress: () => deleteEvent(event.id) },
+      ]
+    );
+  };
+
+  const handleToggleParticipation = (eventId: string) => {
+    toggleParticipation(eventId);
+  };
+
+  const renderEventItem = ({ item }: { item: Event }) => {
+    const isCreatedByUser = item.createdBy === user?.id;
+
+    return (
+      <AppleEventCard
+        event={item}
+        onPress={() => handleEventPress(item)}
+        onParticipatePress={() => handleToggleParticipation(item.id)}
+        onDeletePress={isCreatedByUser ? () => handleDeleteEvent(item) : undefined}
+        isCreatedByUser={isCreatedByUser}
+      />
+    );
+  };
+
+  const renderEmptyState = () => (
+    <View style={styles.emptyState}>
+      <Text style={styles.emptyIcon}>📅</Text>
+      <Text style={[styles.emptyTitle, { color: colors.text }]}>
+        Aucun événement
+      </Text>
+      <Text style={[styles.emptySubtitle, { color: colors.textSecondary }]}>
+        Commencez par créer votre premier événement
+      </Text>
+    </View>
+  );
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <AppleHeader
+        title="Événements"
+        rightButton={{
+          text: "Ajouter",
+          onPress: () => router.push('/add-event' as any)
+        }}
+      />
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      <FlatList
+        data={events}
+        renderItem={renderEventItem}
+        keyExtractor={(item) => item.id}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={refreshEvents}
+            tintColor={colors.primary}
+            colors={[colors.primary]}
+          />
+        }
+        contentContainerStyle={[
+          styles.listContainer,
+          events.length === 0 && styles.emptyContainer,
+        ]}
+        ListEmptyComponent={renderEmptyState}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+  },
+  listContainer: {
+    paddingVertical: Spacing.sm,
+    paddingBottom: Spacing.xxl,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  emptyState: {
     alignItems: 'center',
-    gap: 8,
+    paddingHorizontal: Spacing.xl,
+    paddingVertical: Spacing.xxl,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  emptyIcon: {
+    fontSize: 72,
+    marginBottom: Spacing.lg,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  emptyTitle: {
+    fontSize: Typography.fontSize['2xl'],
+    fontWeight: Typography.fontWeight.semibold,
+    marginBottom: Spacing.sm,
+    textAlign: 'center',
+  },
+  emptySubtitle: {
+    fontSize: Typography.fontSize.base,
+    textAlign: 'center',
+    lineHeight: 22,
+    maxWidth: 280,
   },
 });
