@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Animated,
 } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { router } from 'expo-router';
@@ -42,10 +43,27 @@ export default function CalendarScreen() {
 
   const [selectedDate, setSelectedDate] = React.useState<string>('');
   const [showQuickActions, setShowQuickActions] = React.useState<boolean>(false);
+  const fadeAnim = React.useRef(new Animated.Value(0)).current;
 
   const eventsForSelectedDate = useMemo(() => {
     return events.filter(event => event.date === selectedDate);
   }, [events, selectedDate]);
+
+  React.useEffect(() => {
+    if (showQuickActions) {
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 150,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [showQuickActions, fadeAnim]);
 
   const onDayPress = (day: any) => {
     setSelectedDate(day.dateString);
@@ -127,33 +145,45 @@ export default function CalendarScreen() {
             </Text>
 
             {showQuickActions && (
-              <View style={styles.quickActionsContainer}>
+              <Animated.View style={[
+                styles.quickActionsContainer,
+                { opacity: fadeAnim, transform: [{ translateY: fadeAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [-10, 0]
+                })}] }
+              ]}>
                 <TouchableOpacity
-                  style={[styles.quickActionButton, { backgroundColor: colors.primary }]}
+                  style={[styles.addEventButton, { backgroundColor: colors.primary }]}
                   onPress={handleAddEventForDate}
-                  activeOpacity={0.6}
+                  activeOpacity={0.7}
                 >
-                  <Text style={styles.quickActionText}>➕ Ajouter un événement</Text>
+                  <Text style={styles.addEventButtonText}>+ Nouvel événement</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.quickActionButton, styles.cancelButton, { backgroundColor: colors.textMuted + '20', borderColor: colors.textMuted }]}
-                  onPress={() => setShowQuickActions(false)}
-                  activeOpacity={0.6}
-                >
-                  <Text style={[styles.quickActionText, { color: colors.textMuted }]}>Annuler</Text>
-                </TouchableOpacity>
-              </View>
+              </Animated.View>
             )}
           </View>
 
-          <ScrollView style={styles.eventsList} showsVerticalScrollIndicator={false}>
+          <ScrollView
+            style={styles.eventsList}
+            showsVerticalScrollIndicator={false}
+            onScrollBeginDrag={() => setShowQuickActions(false)}
+          >
             {eventsForSelectedDate.length === 0 ? (
-              <View style={styles.noEventsContainer}>
+              <TouchableOpacity
+                style={styles.noEventsContainer}
+                onPress={() => setShowQuickActions(true)}
+                activeOpacity={0.6}
+              >
                 <Text style={styles.noEventsIcon}>📅</Text>
                 <Text style={[styles.noEventsText, { color: colors.textMuted }]}>
                   Aucun événement ce jour
                 </Text>
-              </View>
+                {!showQuickActions && (
+                  <Text style={[styles.tapToAddText, { color: colors.primary }]}>
+                    Touchez pour ajouter un événement
+                  </Text>
+                )}
+              </TouchableOpacity>
             ) : (
               eventsForSelectedDate.map((event) => (
                 <TouchableOpacity
@@ -352,26 +382,26 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.md,
   },
   quickActionsContainer: {
-    flexDirection: 'row',
-    gap: Spacing.sm,
-    marginTop: Spacing.md,
+    alignItems: 'flex-end',
+    marginTop: Spacing.sm,
     paddingHorizontal: Spacing.sm,
   },
-  quickActionButton: {
-    flex: 1,
-    paddingVertical: Spacing.md,
+  addEventButton: {
+    paddingVertical: Spacing.sm,
     paddingHorizontal: Spacing.lg,
     borderRadius: BorderRadius.lg,
     alignItems: 'center',
     justifyContent: 'center',
-    ...Shadows.sm,
   },
-  cancelButton: {
-    borderWidth: 1,
-  },
-  quickActionText: {
-    fontSize: Typography.fontSize.base,
+  addEventButtonText: {
+    fontSize: Typography.fontSize.sm,
     fontWeight: Typography.fontWeight.semibold,
     color: '#FFFFFF',
+  },
+  tapToAddText: {
+    fontSize: Typography.fontSize.sm,
+    fontWeight: Typography.fontWeight.medium,
+    marginTop: Spacing.sm,
+    textAlign: 'center',
   },
 });

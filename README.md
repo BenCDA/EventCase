@@ -1,50 +1,102 @@
-# Welcome to your Expo app 👋
+# EventCase 📅
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Application mobile de gestion d'événements développée avec React Native et Expo.
 
-## Get started
+## 🚀 Installation
 
-1. Install dependencies
-
+1. Installer les dépendances
    ```bash
    npm install
    ```
 
-2. Start the app
-
+2. Lancer l'application
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+3. Scanner le QR code avec Expo Go (Android) ou l'appareil photo (iOS)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 📱 Fonctionnalités
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- **Gestion d'événements** : Créer, modifier et supprimer des événements
+- **Calendrier interactif** : Navigation et sélection de dates intuitives
+- **Géolocalisation** : Localisation automatique et directions vers les événements
+- **Météo** : Prévisions météorologiques pour chaque événement
+- **Authentification** : Système de connexion et inscription sécurisé
+- **Participation** : Rejoindre et quitter des événements facilement
 
-## Get a fresh project
+## 🏗️ Architecture Technique
 
-When you're ready, run:
+**Stack principale** : React Native (Expo 52) + TypeScript pour une base solide et type-safe.
+**Navigation** : Expo Router avec file-based routing pour une structure claire et performante.
+**State Management** : React Context pour l'authentification et la gestion des événements.
+**Design System** : Système de thème centralisé (Colors, Typography, Spacing) inspiré des guidelines Apple.
+**Composants** : Architecture modulaire avec des composants réutilisables (EventForm, EventDetails).
+**APIs externes** : OpenWeatherMap pour la météo, Expo Location pour la géolocalisation.
+**Gestion des formulaires** : Composants contrôlés avec validation en temps réel.
+**Performance** : Lazy loading, memoization et optimisations bundle pour une UX fluide.
+**Code Quality** : Principe DRY, separation of concerns, composants single-responsibility.
+**Structure** : Organisation par feature (components/event-details, components/forms) pour la maintenabilité.
 
-```bash
-npm run reset-project
+## 📂 Structure du Projet
+
+```
+├── app/                        # Pages principales (Expo Router)
+│   ├── (auth)/                # Pages d'authentification
+│   ├── (tabs)/                # Onglets principaux
+│   ├── event-details/         # Détails d'événement
+│   ├── edit-event/            # Modification d'événement
+│   └── add-event.tsx          # Création d'événement
+├── components/                 # Composants réutilisables
+│   ├── event-details/         # Composants page détail
+│   ├── forms/                 # Composants formulaires
+│   └── ...                    # Autres composants UI
+├── contexts/                   # Gestion d'état globale
+├── services/                   # Services externes (météo)
+├── constants/                  # Thème et constantes
+└── types/                      # Types TypeScript
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🎨 Design
 
-## Learn more
+Interface inspirée du design system Apple avec :
+- **Thème adaptatif** : Mode clair/sombre automatique
+- **Composants natifs** : Feeling iOS/Android respectif
+- **Animations fluides** : Transitions et micro-interactions soignées
+- **Accessibilité** : Respect des standards d'accessibilité mobile
 
-To learn more about developing your project with Expo, look at the following resources:
+## 🛠️ Développement
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Scripts disponibles
+```bash
+npm start          # Lancer Expo
+npm run android    # Lancer sur Android
+npm run ios        # Lancer sur iOS
+npm run web        # Lancer sur web
+```
 
-## Join the community
+### Configuration
+- **Environnement** : Variables d'environnement dans `.env`
+- **API Météo** : Clé OpenWeatherMap requise
+- **Permissions** : Localisation pour les fonctionnalités de géolocalisation
 
-Join our community of developers creating universal apps.
+## 📦 Dépendances principales
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- **expo** : Framework de développement
+- **expo-router** : Navigation file-based
+- **@react-native-community/datetimepicker** : Sélecteur de date/heure
+- **expo-location** : Services de géolocalisation
+- **@expo/vector-icons** : Iconographie
+
+## 🔧 Configuration API
+
+1. Créer un compte sur [OpenWeatherMap](https://openweathermap.org/api)
+2. Obtenir une clé API
+3. Ajouter la clé dans `.env` :
+   ```
+   EXPO_PUBLIC_OPENWEATHER_API_KEY=votre_cle_api
+   ```
+
+## 📄 Licence
+
+MIT License - Voir le fichier LICENSE pour plus de détails.
