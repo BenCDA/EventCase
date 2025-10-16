@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { Event } from '@/types';
 import { Colors, Spacing, Typography, BorderRadius, Shadows } from '@/constants/theme';
 
@@ -10,8 +10,8 @@ interface EventDayCardProps {
 }
 
 export function EventDayCard({ event, onPress }: EventDayCardProps) {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
 
   return (
     <TouchableOpacity

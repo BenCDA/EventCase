@@ -10,7 +10,7 @@ import {
   Keyboard,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { Colors, Typography, Spacing, BorderRadius } from '@/constants/theme';
 import { GeocodingService, GeocodingResult } from '@/services/geocodingService';
 
@@ -27,8 +27,8 @@ export function AddressAutocomplete({
   initialValue = "",
   style,
 }: AddressAutocompleteProps) {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
 
   const [query, setQuery] = useState(initialValue);
   const [suggestions, setSuggestions] = useState<GeocodingResult[]>([]);

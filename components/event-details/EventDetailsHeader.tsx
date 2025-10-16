@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { Colors, Spacing, Typography } from '@/constants/theme';
 
 interface EventDetailsHeaderProps {
@@ -11,8 +11,8 @@ interface EventDetailsHeaderProps {
 }
 
 export function EventDetailsHeader({ isCreatedByUser, onDeleteEvent }: EventDetailsHeaderProps) {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
   const insets = useSafeAreaInsets();
 
   return (

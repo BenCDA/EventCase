@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { Event } from '@/types';
 import { Colors, Spacing, Typography, BorderRadius, Shadows } from '@/constants/theme';
 
@@ -10,8 +10,8 @@ interface EventMainCardProps {
 }
 
 export function EventMainCard({ event }: EventMainCardProps) {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
   const eventDate = new Date(event.date);
 
   return (

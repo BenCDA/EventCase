@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { Event } from '@/types';
 import { Colors, Spacing, Typography, BorderRadius, Shadows } from '@/constants/theme';
 
@@ -18,8 +18,8 @@ export function EventActionButton({
   isParticipating,
   onToggleParticipation
 }: EventActionButtonProps) {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
 
   if (isCreatedByUser) {
     return (

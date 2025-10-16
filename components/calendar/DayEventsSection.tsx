@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Animated, StyleSheet } from 'react-native';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { Event } from '@/types';
 import { EventDayCard } from './EventDayCard';
 import { Colors, Spacing, Typography, BorderRadius } from '@/constants/theme';
@@ -26,8 +26,8 @@ export function DayEventsSection({
   onToggleQuickActions,
   onHideQuickActions,
 }: DayEventsSectionProps) {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('fr-FR', {

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Animated } from 'react-native';
 import { router } from 'expo-router';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { useEvents } from '@/contexts/EventContext';
 import { Event } from '@/types';
 import { AppleHeader } from '@/components/AppleHeader';
@@ -11,8 +11,8 @@ import { Colors, Spacing, Typography } from '@/constants/theme';
 
 export default function CalendarScreen() {
   const { events } = useEvents();
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
   const { markedDates, getEventsForDate } = useCalendarData(events);
 
   const [selectedDate, setSelectedDate] = useState<string>('');

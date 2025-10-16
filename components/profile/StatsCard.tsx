@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { Colors, Spacing, Typography, BorderRadius, Shadows } from '@/constants/theme';
 
 interface StatsCardProps {
@@ -9,8 +9,8 @@ interface StatsCardProps {
 }
 
 export function StatsCard({ createdCount, participatingCount }: StatsCardProps) {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
 
   return (
     <View style={[styles.container, { backgroundColor: colors.surface, borderColor: colors.borderLight }]}>

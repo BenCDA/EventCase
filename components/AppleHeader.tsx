@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { Colors, Typography, Spacing } from '@/constants/theme';
 
 interface AppleHeaderProps {
@@ -18,8 +18,8 @@ interface AppleHeaderProps {
 
 export function AppleHeader({ title, rightButton, leftButton }: AppleHeaderProps) {
   const insets = useSafeAreaInsets();
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
 
   return (
     <View

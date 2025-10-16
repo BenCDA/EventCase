@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { Colors, Typography, Spacing, BorderRadius, Shadows } from '@/constants/theme';
 import { WeatherData } from '@/types';
 import { WeatherService } from '@/services/weatherService';
@@ -12,8 +12,8 @@ interface WeatherCardProps {
 }
 
 export function WeatherCard({ weather, compact = false }: WeatherCardProps) {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
 
   const getWeatherIcon = (condition: string) => {
     switch (condition.toLowerCase()) {

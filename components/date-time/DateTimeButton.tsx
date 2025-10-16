@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, View, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { Colors, Shadows } from '@/constants/theme';
 
 interface DateTimeButtonProps {
@@ -10,8 +10,8 @@ interface DateTimeButtonProps {
 }
 
 export function DateTimeButton({ iconName, onPress }: DateTimeButtonProps) {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
 
   return (
     <TouchableOpacity

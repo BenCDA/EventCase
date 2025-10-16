@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { Colors, Spacing, Typography, BorderRadius } from '@/constants/theme';
 
 interface CalendarViewProps {
@@ -10,8 +10,8 @@ interface CalendarViewProps {
 }
 
 export function CalendarView({ markedDates, onDayPress }: CalendarViewProps) {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
 
   return (
     <View style={[styles.container, { backgroundColor: colors.surface }]}>

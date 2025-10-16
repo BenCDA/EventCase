@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { Colors, Spacing, Shadows } from '@/constants/theme';
 import * as Location from 'expo-location';
 import { AddressAutocomplete } from '@/components/AddressAutocomplete';
@@ -46,8 +46,8 @@ export function EventForm({
   submitButtonText,
   submitButtonLoadingText
 }: EventFormProps) {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
 
   const [title, setTitle] = useState(initialEvent?.title || '');
   const [description, setDescription] = useState(initialEvent?.description || '');

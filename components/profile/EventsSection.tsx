@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { Event } from '@/types';
 import { EventListItem } from './EventListItem';
 import { Colors, Spacing, Typography, BorderRadius, Shadows } from '@/constants/theme';
@@ -21,8 +21,8 @@ export function EventsSection({
   emptyText,
   showCreateButton = false
 }: EventsSectionProps) {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
 
   return (
     <View style={[styles.container, { backgroundColor: colors.surface, borderColor: colors.borderLight }]}>

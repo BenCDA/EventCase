@@ -1,17 +1,19 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, Alert } from 'react-native';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { useAuth } from '@/contexts/AuthContext';
 import { useEvents } from '@/contexts/EventContext';
 import { AppleHeader } from '@/components/AppleHeader';
 import { ProfileCard, StatsCard, EventsSection } from '@/components/profile';
+import { ThemeSelector } from '@/components/ThemeSelector';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { Colors, Spacing } from '@/constants/theme';
 
 export default function ProfileScreen() {
   const { user, logout } = useAuth();
   const { events } = useEvents();
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
 
   const handleLogout = () => {
     Alert.alert(
@@ -43,6 +45,7 @@ export default function ProfileScreen() {
           createdCount={myEvents.length}
           participatingCount={participatingEvents.length}
         />
+        <ThemeSelector />
         <EventsSection
           title="Mes Événements"
           events={myEvents}

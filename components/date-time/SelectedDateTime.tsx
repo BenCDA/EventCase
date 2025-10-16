@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { Colors, Spacing, Typography } from '@/constants/theme';
 
 interface SelectedDateTimeProps {
@@ -9,8 +9,8 @@ interface SelectedDateTimeProps {
 }
 
 export function SelectedDateTime({ date, time }: SelectedDateTimeProps) {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
 
   const formatDate = (date: Date) => {
     const today = new Date();

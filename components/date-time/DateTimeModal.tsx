@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Modal, StyleSheet, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { Colors, Typography, Spacing, BorderRadius } from '@/constants/theme';
 
 interface DateTimeModalProps {
@@ -21,8 +21,8 @@ export function DateTimeModal({
   onClose,
   onChange
 }: DateTimeModalProps) {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
 
   if (Platform.OS === 'android') {
     return null; // Android uses native picker

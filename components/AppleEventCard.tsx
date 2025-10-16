@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { useWeatherData } from '@/hooks/useWeatherData';
 import { WeatherCard } from './WeatherCard';
 import { Colors, Typography, Spacing, BorderRadius, Shadows } from '@/constants/theme';
@@ -22,8 +22,8 @@ export function AppleEventCard({
   onDeletePress,
   isCreatedByUser
 }: AppleEventCardProps) {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
   const eventDate = new Date(event.date);
   const { weather } = useWeatherData(event);
 

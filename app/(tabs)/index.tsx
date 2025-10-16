@@ -8,7 +8,7 @@ import {
   Text,
 } from 'react-native';
 import { router } from 'expo-router';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useTheme } from '@/hooks/use-theme';
 import { useEvents } from '@/contexts/EventContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { Event } from '@/types';
@@ -19,8 +19,8 @@ import { Colors, Spacing, Typography } from '@/constants/theme';
 export default function EventsScreen() {
   const { events, loading, refreshEvents, deleteEvent, toggleParticipation } = useEvents();
   const { user } = useAuth();
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const { colorScheme } = useTheme();
+  const colors = Colors[colorScheme];
 
   const handleEventPress = (event: Event) => {
     router.push(`/event-details/${event.id}`);
