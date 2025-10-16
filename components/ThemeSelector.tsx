@@ -11,28 +11,22 @@ export function ThemeSelector() {
   const themeOptions = [
     {
       mode: 'light' as const,
-      label: 'Clair',
-      icon: 'sunny',
-      description: 'Thème lumineux'
+      icon: 'sunny'
     },
     {
       mode: 'dark' as const,
-      label: 'Sombre',
-      icon: 'moon',
-      description: 'Thème sombre'
+      icon: 'moon'
     },
     {
       mode: 'system' as const,
-      label: 'Système',
-      icon: 'phone-portrait',
-      description: 'Suit le système'
+      icon: 'phone-portrait'
     },
   ];
 
   return (
     <View style={[styles.container, { backgroundColor: colors.surface, borderColor: colors.borderLight }]}>
       <View style={styles.header}>
-        <Ionicons name="color-palette" size={20} color={colors.primary} />
+        <Ionicons name="color-palette-outline" size={18} color={colors.textSecondary} />
         <Text style={[styles.title, { color: colors.text }]}>Apparence</Text>
       </View>
 
@@ -43,53 +37,20 @@ export function ThemeSelector() {
             <TouchableOpacity
               key={option.mode}
               style={[
-                styles.option,
+                styles.optionButton,
                 {
-                  backgroundColor: colors.background,
-                  borderColor: isSelected ? colors.primary : colors.border,
-                  borderWidth: isSelected ? 2 : 1,
+                  backgroundColor: isSelected ? colors.primary : colors.background,
+                  borderColor: isSelected ? colors.primary : colors.borderLight,
                 }
               ]}
               onPress={() => setThemeMode(option.mode)}
-              activeOpacity={0.7}
+              activeOpacity={0.8}
             >
-              <View style={[
-                styles.iconContainer,
-                {
-                  backgroundColor: isSelected ? colors.primary : colors.background,
-                }
-              ]}>
-                <Ionicons
-                  name={option.icon}
-                  size={24}
-                  color={isSelected ? '#FFFFFF' : colors.text}
-                />
-              </View>
-
-              <View style={styles.textContainer}>
-                <Text style={[
-                  styles.optionLabel,
-                  {
-                    color: colors.text,
-                    fontWeight: isSelected ? '600' : '500',
-                  }
-                ]}>
-                  {option.label}
-                </Text>
-                <Text style={[styles.optionDescription, { color: colors.textMuted }]}>
-                  {option.description}
-                </Text>
-              </View>
-
-              {isSelected && (
-                <View style={styles.checkContainer}>
-                  <Ionicons
-                    name="checkmark-circle"
-                    size={20}
-                    color={colors.primary}
-                  />
-                </View>
-              )}
+              <Ionicons
+                name={option.icon}
+                size={20}
+                color={isSelected ? '#FFFFFF' : colors.textSecondary}
+              />
             </TouchableOpacity>
           );
         })}
@@ -105,47 +66,30 @@ const styles = StyleSheet.create({
     borderRadius: BorderRadius.md,
     borderWidth: 0.5,
     padding: Spacing.lg,
-    ...Shadows.sm,
+    ...Shadows.subtle,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: Spacing.lg,
+    marginBottom: Spacing.md,
     gap: Spacing.sm,
   },
   title: {
-    fontSize: Typography.fontSize.lg,
-    fontWeight: Typography.fontWeight.semibold,
+    fontSize: Typography.fontSize.base,
+    fontWeight: Typography.fontWeight.medium,
   },
   optionsContainer: {
-    gap: Spacing.sm,
-  },
-  option: {
     flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: Spacing.md,
-    paddingHorizontal: Spacing.md,
-    borderRadius: BorderRadius.md,
-    gap: Spacing.md,
+    gap: Spacing.sm,
+    justifyContent: 'center',
   },
-  iconContainer: {
+  optionButton: {
     width: 44,
     height: 44,
     borderRadius: 22,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  textContainer: {
-    flex: 1,
-  },
-  optionLabel: {
-    fontSize: Typography.fontSize.base,
-    marginBottom: 2,
-  },
-  optionDescription: {
-    fontSize: Typography.fontSize.sm,
-  },
-  checkContainer: {
-    marginLeft: Spacing.sm,
+    borderWidth: 1,
+    ...Shadows.xs,
   },
 });
