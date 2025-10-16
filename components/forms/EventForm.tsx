@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -11,21 +11,18 @@ import {
   Platform,
 } from 'react-native';
 import { router } from 'expo-router';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { Colors, Spacing, Typography, BorderRadius, Shadows } from '@/constants/theme';
+import { Colors, Spacing, Shadows } from '@/constants/theme';
 import * as Location from 'expo-location';
 import { AddressAutocomplete } from '@/components/AddressAutocomplete';
 import { DateTimeSelector } from '@/components/DateTimeSelector';
 import { Event } from '@/types';
 
 interface EventFormProps {
-  mode: 'create' | 'edit';
   initialEvent?: Event;
   initialDate?: Date;
   onSubmit: (eventData: EventFormData) => Promise<void>;
-  title: string;
   submitButtonText: string;
   submitButtonLoadingText: string;
 }
@@ -43,17 +40,14 @@ export interface EventFormData {
 }
 
 export function EventForm({
-  mode,
   initialEvent,
   initialDate,
   onSubmit,
-  title: screenTitle,
   submitButtonText,
   submitButtonLoadingText
 }: EventFormProps) {
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
-  const insets = useSafeAreaInsets();
 
   const [title, setTitle] = useState(initialEvent?.title || '');
   const [description, setDescription] = useState(initialEvent?.description || '');
@@ -181,7 +175,7 @@ export function EventForm({
         </TouchableOpacity>
       </View>
 
-      <ScrollView style={styles.form} contentContainerStyle={styles.formContent}>
+      <ScrollView style={styles.form} contentContainerStyle={styles.formContent} showsVerticalScrollIndicator={false}>
         <View style={[styles.section, { backgroundColor: colors.surface, borderColor: colors.borderLight }]}>
           <Text style={[styles.label, { color: colors.text }]}>Titre <Text style={styles.required}>*</Text></Text>
           <TextInput
@@ -249,13 +243,15 @@ export function EventForm({
           </View>
 
           <AddressAutocomplete
-            value={locationName}
-            onValueChange={setLocationName}
+            initialValue={locationName}
             onLocationSelect={(location) => {
-              setLocationCoords({
-                latitude: location.latitude,
-                longitude: location.longitude
-              });
+              setLocationName(location.name);
+              if (location.latitude && location.longitude) {
+                setLocationCoords({
+                  latitude: location.latitude,
+                  longitude: location.longitude
+                });
+              }
             }}
             placeholder="Rechercher une adresse..."
           />
@@ -273,15 +269,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 4,
+    paddingHorizontal: Spacing.lg,
+    paddingVertical: Spacing.xs,
     borderBottomWidth: 0.33,
-    minHeight: 40,
+    minHeight: 44,
   },
   cancelButton: {
-    paddingVertical: 4,
-    paddingHorizontal: 2,
-    minHeight: 28,
+    paddingVertical: Spacing.xs,
+    paddingHorizontal: Spacing.xs / 2,
+    minHeight: 32,
     justifyContent: 'center',
   },
   cancelButtonText: {
@@ -290,11 +286,11 @@ const styles = StyleSheet.create({
     letterSpacing: 0.1,
   },
   saveButton: {
-    paddingVertical: 6,
-    paddingHorizontal: 16,
-    borderRadius: 6,
-    minWidth: 70,
-    minHeight: 32,
+    paddingVertical: Spacing.sm,
+    paddingHorizontal: Spacing.lg,
+    borderRadius: 8,
+    minWidth: 80,
+    minHeight: 36,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -314,19 +310,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   formContent: {
-    padding: Spacing.md,
+    paddingHorizontal: Spacing.md,
+    paddingTop: Spacing.xs,
+    paddingBottom: Spacing.md,
   },
   section: {
     borderRadius: 12,
-    padding: 20,
-    marginBottom: 16,
+    padding: Spacing.md,
+    marginBottom: Spacing.sm,
     borderWidth: 0.5,
     ...Shadows.subtle,
   },
   label: {
     fontSize: 15,
     fontWeight: '600',
-    marginBottom: 10,
+    marginBottom: Spacing.xs,
     letterSpacing: 0.1,
   },
   required: {
@@ -336,19 +334,19 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 0.5,
     borderRadius: 10,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
     fontSize: 16,
-    minHeight: 48,
+    minHeight: 44,
   },
   textArea: {
     borderWidth: 0.5,
     borderRadius: 10,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
     fontSize: 16,
     textAlignVertical: 'top',
-    minHeight: 120,
+    minHeight: 100,
     lineHeight: 22,
   },
   locationHeader: {

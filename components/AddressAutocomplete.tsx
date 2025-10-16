@@ -36,6 +36,16 @@ export function AddressAutocomplete({
   const [showSuggestions, setShowSuggestions] = useState(false);
   const searchTimeout = useRef<NodeJS.Timeout | null>(null);
 
+  // Synchroniser avec initialValue quand elle change
+  useEffect(() => {
+    setQuery(initialValue || '');
+    // Masquer les suggestions quand une valeur est définie de l'extérieur
+    if (initialValue) {
+      setShowSuggestions(false);
+      setSuggestions([]);
+    }
+  }, [initialValue]);
+
   useEffect(() => {
     if (query.length < 3) {
       setSuggestions([]);
@@ -72,12 +82,20 @@ export function AddressAutocomplete({
   const handleSelectSuggestion = (suggestion: GeocodingResult) => {
     setQuery(suggestion.name);
     setShowSuggestions(false);
+    setSuggestions([]);
     onLocationSelect({
       name: suggestion.name,
       latitude: suggestion.latitude,
       longitude: suggestion.longitude,
     });
     Keyboard.dismiss();
+  };
+
+  const handleInputBlur = () => {
+    // Délai pour permettre la sélection d'une suggestion
+    setTimeout(() => {
+      setShowSuggestions(false);
+    }, 150);
   };
 
   const renderSuggestion = (item: GeocodingResult, index: number) => (
@@ -120,6 +138,7 @@ export function AddressAutocomplete({
               setShowSuggestions(true);
             }
           }}
+          onBlur={handleInputBlur}
         />
         {isLoading && (
           <ActivityIndicator size="small" color={colors.primary} />
@@ -179,7 +198,7 @@ const styles = StyleSheet.create({
     top: '100%',
     left: 0,
     right: 0,
-    maxHeight: 200,
+    maxHeight: 120,
     borderRadius: BorderRadius.md,
     borderWidth: 1,
     marginTop: Spacing.xs,

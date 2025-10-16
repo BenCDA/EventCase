@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useWeatherData } from '@/hooks/useWeatherData';
 import { WeatherCard } from './WeatherCard';
-import { WeatherService } from '@/services/weatherService';
 import { Colors, Typography, Spacing, BorderRadius, Shadows } from '@/constants/theme';
-import { Event, WeatherData } from '@/types';
+import { Event } from '@/types';
 
 interface AppleEventCardProps {
   event: Event;
@@ -25,33 +25,7 @@ export function AppleEventCard({
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme ?? 'light'];
   const eventDate = new Date(event.date);
-  const [weather, setWeather] = useState<WeatherData | null>(null);
-
-  // Charger la météo pour l'événement
-  useEffect(() => {
-    const loadWeather = async () => {
-      if (!event.location) return;
-
-      try {
-        let weatherData: WeatherData | null = null;
-
-        if (event.location.latitude && event.location.longitude) {
-          weatherData = await WeatherService.getWeatherByCoordinates(
-            event.location.latitude,
-            event.location.longitude
-          );
-        } else if (event.location.name) {
-          weatherData = await WeatherService.getWeatherByCity(event.location.name);
-        }
-
-        setWeather(weatherData);
-      } catch (error) {
-        console.log('Could not load weather for event card:', error);
-      }
-    };
-
-    loadWeather();
-  }, [event.location]);
+  const { weather } = useWeatherData(event);
 
   const formatDate = (date: Date) => {
     const today = new Date();
