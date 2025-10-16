@@ -154,15 +154,13 @@ export function EventForm({
       style={[styles.container, { backgroundColor: colors.background }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <View style={[styles.header, { paddingTop: insets.top + 12, backgroundColor: colors.surface, borderBottomColor: colors.borderLight }]}>
+      <View style={[styles.header, { backgroundColor: colors.surface, borderBottomColor: colors.borderLight }]}>
         <TouchableOpacity
           style={styles.cancelButton}
           onPress={() => router.back()}
         >
           <Text style={[styles.cancelButtonText, { color: colors.textSecondary }]}>Annuler</Text>
         </TouchableOpacity>
-
-        <Text style={[styles.title, { color: colors.text }]}>{screenTitle}</Text>
 
         <TouchableOpacity
           style={[
@@ -275,38 +273,39 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.md,
-    borderBottomWidth: 0.5,
+    paddingHorizontal: 20,
+    paddingVertical: 4,
+    borderBottomWidth: 0.33,
+    minHeight: 40,
   },
   cancelButton: {
-    paddingVertical: Spacing.sm,
-    paddingHorizontal: Spacing.xs,
+    paddingVertical: 4,
+    paddingHorizontal: 2,
+    minHeight: 28,
+    justifyContent: 'center',
   },
   cancelButtonText: {
-    fontSize: Typography.fontSize.base,
-  },
-  title: {
-    fontSize: Typography.fontSize.lg,
-    fontWeight: Typography.fontWeight.semibold,
-    flex: 1,
-    textAlign: 'center',
-    marginHorizontal: Spacing.md,
+    fontSize: 15,
+    fontWeight: '500',
+    letterSpacing: 0.1,
   },
   saveButton: {
-    paddingVertical: Spacing.sm,
-    paddingHorizontal: Spacing.md,
-    borderRadius: BorderRadius.sm,
+    paddingVertical: 6,
+    paddingHorizontal: 16,
+    borderRadius: 6,
     minWidth: 70,
+    minHeight: 32,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   saveButtonDisabled: {
-    opacity: 0.5,
+    opacity: 0.4,
   },
   saveButtonText: {
     color: 'white',
-    fontSize: Typography.fontSize.base,
-    fontWeight: Typography.fontWeight.medium,
+    fontSize: 14,
+    fontWeight: '600',
+    letterSpacing: 0.1,
   },
   saveButtonTextDisabled: {
     color: 'rgba(255, 255, 255, 0.6)',
@@ -318,35 +317,39 @@ const styles = StyleSheet.create({
     padding: Spacing.md,
   },
   section: {
-    borderRadius: BorderRadius.md,
-    padding: Spacing.lg,
-    marginBottom: Spacing.md,
+    borderRadius: 12,
+    padding: 20,
+    marginBottom: 16,
     borderWidth: 0.5,
-    ...Shadows.sm,
+    ...Shadows.subtle,
   },
   label: {
-    fontSize: Typography.fontSize.base,
-    fontWeight: Typography.fontWeight.medium,
-    marginBottom: Spacing.sm,
+    fontSize: 15,
+    fontWeight: '600',
+    marginBottom: 10,
+    letterSpacing: 0.1,
   },
   required: {
     color: '#FF3B30',
+    fontWeight: '700',
   },
   input: {
-    borderWidth: 1,
-    borderRadius: BorderRadius.sm,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
-    fontSize: Typography.fontSize.base,
+    borderWidth: 0.5,
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    fontSize: 16,
+    minHeight: 48,
   },
   textArea: {
-    borderWidth: 1,
-    borderRadius: BorderRadius.sm,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
-    fontSize: Typography.fontSize.base,
+    borderWidth: 0.5,
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    fontSize: 16,
     textAlignVertical: 'top',
-    minHeight: 100,
+    minHeight: 120,
+    lineHeight: 22,
   },
   locationHeader: {
     flexDirection: 'row',
@@ -357,14 +360,16 @@ const styles = StyleSheet.create({
   locationButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: Spacing.xs,
-    paddingHorizontal: Spacing.sm,
-    borderWidth: 1,
-    borderRadius: BorderRadius.sm,
-    gap: Spacing.xs,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderWidth: 0.5,
+    borderRadius: 8,
+    gap: 6,
+    minHeight: 36,
   },
   locationButtonText: {
-    fontSize: Typography.fontSize.sm,
-    fontWeight: Typography.fontWeight.medium,
+    fontSize: 14,
+    fontWeight: '500',
+    letterSpacing: 0.1,
   },
 });

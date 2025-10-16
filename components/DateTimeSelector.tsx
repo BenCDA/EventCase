@@ -96,15 +96,10 @@ export function DateTimeSelector({
               { backgroundColor: colors.surface, borderColor: colors.borderLight }
             ]}
             onPress={() => setShowDatePicker(true)}
+            activeOpacity={0.7}
           >
             <View style={styles.buttonContent}>
-              <Ionicons name="calendar-outline" size={20} color={colors.primary} />
-              <View style={styles.buttonText}>
-                <Text style={[styles.label, { color: colors.textMuted }]}>Date</Text>
-                <Text style={[styles.value, { color: colors.text }]}>
-                  {formatDate(date)}
-                </Text>
-              </View>
+              <Ionicons name="calendar-outline" size={28} color={colors.primary} />
             </View>
           </TouchableOpacity>
 
@@ -114,15 +109,10 @@ export function DateTimeSelector({
               { backgroundColor: colors.surface, borderColor: colors.borderLight }
             ]}
             onPress={() => setShowTimePicker(true)}
+            activeOpacity={0.7}
           >
             <View style={styles.buttonContent}>
-              <Ionicons name="time-outline" size={20} color={colors.primary} />
-              <View style={styles.buttonText}>
-                <Text style={[styles.label, { color: colors.textMuted }]}>Heure</Text>
-                <Text style={[styles.value, { color: time ? colors.text : colors.textMuted }]}>
-                  {formatTime(time)}
-                </Text>
-              </View>
+              <Ionicons name="time-outline" size={28} color={colors.primary} />
             </View>
           </TouchableOpacity>
         </View>
@@ -212,13 +202,7 @@ export function DateTimeSelector({
           onPress={() => setShowDatePicker(true)}
         >
           <View style={styles.buttonContent}>
-            <Ionicons name="calendar-outline" size={20} color={colors.primary} />
-            <View style={styles.buttonText}>
-              <Text style={[styles.label, { color: colors.textMuted }]}>Date</Text>
-              <Text style={[styles.value, { color: colors.text }]}>
-                {formatDate(date)}
-              </Text>
-            </View>
+            <Ionicons name="calendar-outline" size={28} color={colors.primary} />
           </View>
         </TouchableOpacity>
 
@@ -230,13 +214,7 @@ export function DateTimeSelector({
           onPress={() => setShowTimePicker(true)}
         >
           <View style={styles.buttonContent}>
-            <Ionicons name="time-outline" size={20} color={colors.primary} />
-            <View style={styles.buttonText}>
-              <Text style={[styles.label, { color: colors.textMuted }]}>Heure</Text>
-              <Text style={[styles.value, { color: time ? colors.text : colors.textMuted }]}>
-                {formatTime(time)}
-              </Text>
-            </View>
+            <Ionicons name="time-outline" size={28} color={colors.primary} />
           </View>
         </TouchableOpacity>
       </View>
@@ -269,40 +247,27 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
-    gap: Spacing.sm,
+    gap: 24,
+    justifyContent: 'center',
   },
   dateButton: {
-    flex: 2,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
-    padding: Spacing.md,
+    width: 64,
+    height: 64,
+    borderRadius: 16,
+    borderWidth: 0.5,
     ...Shadows.sm,
   },
   timeButton: {
-    flex: 1,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
-    padding: Spacing.md,
+    width: 64,
+    height: 64,
+    borderRadius: 16,
+    borderWidth: 0.5,
     ...Shadows.sm,
   },
   buttonContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.sm,
-  },
-  buttonText: {
     flex: 1,
-  },
-  label: {
-    fontSize: Typography.fontSize.xs,
-    fontWeight: Typography.fontWeight.medium,
-    marginBottom: 2,
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-  },
-  value: {
-    fontSize: Typography.fontSize.base,
-    fontWeight: Typography.fontWeight.medium,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   modalOverlay: {
     flex: 1,

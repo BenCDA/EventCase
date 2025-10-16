@@ -180,13 +180,14 @@ export function AppleEventCard({
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: Spacing.md,
-    marginVertical: Spacing.sm,
-    borderRadius: BorderRadius.md,
+    marginHorizontal: 16,
+    marginVertical: 8,
+    borderRadius: 12,
     borderWidth: 0.5,
+    ...Shadows.subtle,
   },
   content: {
-    padding: Spacing.md,
+    padding: 16,
   },
   dateTimeSection: {
     marginBottom: Spacing.sm,
@@ -198,12 +199,14 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.xs / 2,
   },
   dateText: {
-    fontSize: Typography.fontSize.sm,
-    fontWeight: Typography.fontWeight.medium,
+    fontSize: 14,
+    fontWeight: '500',
+    letterSpacing: 0.1,
   },
   timeText: {
-    fontSize: Typography.fontSize.base,
-    fontWeight: Typography.fontWeight.semibold,
+    fontSize: 16,
+    fontWeight: '600',
+    letterSpacing: 0.1,
   },
   mainContent: {
     flex: 1,
@@ -215,10 +218,12 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.sm,
   },
   title: {
-    fontSize: Typography.fontSize.base,
-    fontWeight: Typography.fontWeight.semibold,
+    fontSize: 16,
+    fontWeight: '600',
     flex: 1,
-    marginRight: Spacing.sm,
+    marginRight: 12,
+    lineHeight: 22,
+    letterSpacing: 0.1,
   },
   deleteButton: {
     width: 24,
@@ -262,15 +267,18 @@ const styles = StyleSheet.create({
     fontSize: Typography.fontSize.xs,
   },
   participateButton: {
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
-    borderRadius: BorderRadius.lg,
-    minWidth: 80,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+    minWidth: 84,
+    minHeight: 32,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   participateText: {
-    fontSize: Typography.fontSize.sm,
-    fontWeight: Typography.fontWeight.medium,
+    fontSize: 13,
+    fontWeight: '600',
+    letterSpacing: 0.1,
   },
   weatherContainer: {
     marginBottom: Spacing.sm,

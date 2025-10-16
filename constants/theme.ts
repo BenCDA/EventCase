@@ -83,6 +83,13 @@ export const Spacing = {
   lg: 24,
   xl: 32,
   xxl: 48,
+  xxxl: 64,
+  // Micro-spacing pour des ajustements précis
+  micro: 2,
+  tiny: 6,
+  base: 12,
+  large: 20,
+  huge: 40,
 };
 
 export const BorderRadius = {
@@ -115,10 +122,18 @@ export const Typography = {
 };
 
 export const Shadows = {
+  // Ombres ultra-subtiles niveau GAFAM
+  subtle: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 0.5 },
+    shadowOpacity: 0.03,
+    shadowRadius: 1,
+    elevation: 0.5,
+  },
   sm: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
+    shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 1,
   },
@@ -127,20 +142,28 @@ export const Shadows = {
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 4,
-    elevation: 3,
+    elevation: 2,
   },
   lg: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.12,
+    shadowOpacity: 0.1,
     shadowRadius: 8,
-    elevation: 5,
+    elevation: 4,
   },
   xl: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.16,
+    shadowOpacity: 0.12,
     shadowRadius: 16,
+    elevation: 6,
+  },
+  // Ombre pour boutons flottants
+  floating: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
     elevation: 8,
   },
 };

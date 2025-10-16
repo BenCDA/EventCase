@@ -27,7 +27,7 @@ export function EventDetailsHeader({ isCreatedByUser, onDeleteEvent }: EventDeta
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => router.back()}
-        activeOpacity={0.6}
+        activeOpacity={0.7}
       >
         <Text style={[styles.backButtonText, { color: colors.primary }]}>← Retour</Text>
       </TouchableOpacity>
@@ -36,7 +36,7 @@ export function EventDetailsHeader({ isCreatedByUser, onDeleteEvent }: EventDeta
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={onDeleteEvent}
-          activeOpacity={0.6}
+          activeOpacity={0.7}
         >
           <Text style={[styles.deleteButtonText, { color: colors.error }]}>Supprimer</Text>
         </TouchableOpacity>
@@ -50,20 +50,31 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.md,
-    borderBottomWidth: 0.5,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderBottomWidth: 0.33,
+    minHeight: 44,
   },
   backButton: {
-    paddingVertical: Spacing.sm,
+    paddingVertical: 8,
+    paddingHorizontal: 4,
+    minHeight: 32,
+    justifyContent: 'center',
   },
   backButtonText: {
-    fontSize: Typography.fontSize.base,
+    fontSize: 16,
+    fontWeight: '500',
+    letterSpacing: 0.1,
   },
   deleteButton: {
-    paddingVertical: Spacing.sm,
+    paddingVertical: 8,
+    paddingHorizontal: 4,
+    minHeight: 32,
+    justifyContent: 'center',
   },
   deleteButtonText: {
-    fontSize: Typography.fontSize.base,
+    fontSize: 16,
+    fontWeight: '500',
+    letterSpacing: 0.1,
   },
 });
