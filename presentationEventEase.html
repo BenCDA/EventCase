@@ -330,36 +330,10 @@
             </div>
         </div>
 
-        <!-- Slide 5: Code - Context API -->
-        <div class="slide">
-            <h2>💻 Code Clé #1 : Context API</h2>
-            <h3>Gestion d'état globale sans Redux</h3>
-            <div class="code-block">
-<span class="keyword">interface</span> <span class="function">EventContextType</span> {
-  events: Event[];
-  <span class="function">addEvent</span>: (event: Event) => void;
-  <span class="function">deleteEvent</span>: (id: string) => void;
-  <span class="function">updateEvent</span>: (id: string, event: Event) => void;
-}
-
-<span class="keyword">const</span> EventContext = <span class="function">createContext</span>&lt;EventContextType&gt;();
-
-<span class="keyword">export function</span> <span class="function">EventProvider</span>({ children }) {
-  <span class="keyword">const</span> [events, setEvents] = <span class="function">useState</span>&lt;Event[]&gt;([]);
-  
-  <span class="keyword">return</span> (
-    &lt;EventContext.Provider value={{ events, addEvent, deleteEvent }}&gt;
-      {children}
-    &lt;/EventContext.Provider&gt;
-  );
-}
-            </div>
-            <p style="margin-top: 20px; font-size: 20px;">✅ Partage des données entre composants • ✅ TypeScript strict</p>
-        </div>
-
+       
         <!-- Slide 6: Code - Service Météo -->
         <div class="slide">
-            <h2>💻 Code Clé #2 : Service Météo</h2>
+            <h2>💻 Code Clé #1 : Service Météo</h2>
             <h3>Intégration API OpenWeatherMap</h3>
             <div class="code-block">
 <span class="keyword">export async function</span> <span class="function">getWeatherByCoords</span>(
@@ -385,7 +359,7 @@
 
         <!-- Slide 7: Code - Géolocalisation -->
         <div class="slide">
-            <h2>💻 Code Clé #3 : Géolocalisation</h2>
+            <h2>💻 Code Clé #2 : Géolocalisation</h2>
             <h3>Hook personnalisé avec Expo Location</h3>
             <div class="code-block">
 <span class="keyword">export function</span> <span class="function">useLocation</span>() {
@@ -417,7 +391,7 @@
         <!-- Slide 8: Design System -->
         <div class="slide">
             <h2>🎨 Design System</h2>
-            <h3>Système de thème centralisé inspiré d'Apple</h3>
+            <h3>Système de thème centralisé</h3>
             <div class="features-grid">
                 <div class="feature-card">
                     <h4>Colors</h4>
@@ -491,16 +465,7 @@
             <div>
                 <h2 style="color: white; border: none;">🎯 Conclusion</h2>
                 
-                <div style="margin-top: 50px;">
-                    <p style="font-size: 24px; opacity: 0.9;">✅ Architecture maintenable</p>
-                    <p style="font-size: 24px; opacity: 0.9;">✅ Fonctionnalités riches et intégrées</p>
-                    
-                </div>
-                <p style="font-size: 20px; margin-top: 50px; opacity: 0.8;">
-                    📄 Licence MIT • 🌐 Open Source • 🚀 github.com/BenCDA/EventCase
-                </p>
-            </div>
-        </div>
+               
     </div>
 
     <div class="slide-number">
